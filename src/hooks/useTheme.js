@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
 
-// Remembers the viewer's choice when storage is available, otherwise follows the OS setting.
+// Dark matches the channel branding; remember the viewer's choice when storage is available.
 function getInitialTheme() {
   try {
     const saved = localStorage.getItem('theme')
     if (saved) return saved
   } catch {
-    // Storage blocked (private mode etc.) — fall through to the OS preference
+    // Storage blocked (private mode etc.) — fall back to the default
   }
-  return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark'
+  return 'dark'
 }
 
 export default function useTheme() {

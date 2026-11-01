@@ -1,30 +1,39 @@
-import ArrowIcon from './ArrowIcon.jsx'
-import StatusCard from './StatusCard.jsx'
+import { CHANNEL } from '../data/channel.js'
+import { InstagramIcon, YouTubeIcon } from './icons.jsx'
+import SortVisualizer from './SortVisualizer.jsx'
 
 export default function Hero() {
   return (
     <header className="hero">
       <div className="reveal">
         <div className="badge">
-          <span className="pulse"></span> Live &amp; served from Amazon S3
+          <span className="pulse"></span> {CHANNEL.tagline}
         </div>
         <h1>
-          Static, swift, and <span className="gradient-text">served from the cloud.</span>
+          Learn. Code. <span className="gradient-text">Build. Grow.</span>
         </h1>
         <p className="lead">
-          No servers to patch, no runtime to babysit. Just clean HTML delivered
-          straight from an S3 bucket — durable, scalable, and ridiculously cheap.
+          Bite-sized, visual explainers on DSA, web development, deployment and AI —
+          so complex IT concepts finally click.
         </p>
         <div className="cta-row">
-          <a href="#deploy" className="btn btn-primary">
-            See how it's deployed
-            <ArrowIcon />
+          <a href={CHANNEL.youtube.url} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+            <YouTubeIcon />
+            Subscribe on YouTube
           </a>
-          <a href="#features" className="btn btn-ghost">Why S3?</a>
+          <a href={CHANNEL.instagram.url} target="_blank" rel="noopener noreferrer" className="btn btn-ghost">
+            <InstagramIcon />
+            Follow on Instagram
+          </a>
         </div>
+        <ul className="hero-meta">
+          <li>60-second Shorts</li>
+          <li>In English</li>
+          <li>Beginner friendly</li>
+        </ul>
       </div>
 
-      <StatusCard />
+      <SortVisualizer />
     </header>
   )
 }
