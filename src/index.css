@@ -149,6 +149,7 @@ nav {
   font-weight: 700;
   font-size: 1.08rem;
   letter-spacing: -0.01em;
+  white-space: nowrap;
 }
 .brand-logo {
   width: 40px;
@@ -166,9 +167,10 @@ nav {
 }
 .nav-links > a:not(.btn):hover { color: var(--text); }
 
-.theme-toggle {
+.icon-btn {
   width: 38px;
   height: 38px;
+  flex: none;
   border-radius: 10px;
   border: 1px solid var(--border);
   background: var(--surface);
@@ -178,10 +180,19 @@ nav {
   place-items: center;
   transition: background 0.2s, transform 0.2s;
 }
-.theme-toggle:hover { background: var(--surface-hover); transform: rotate(-12deg); }
+.icon-btn:hover { background: var(--surface-hover); }
+.theme-toggle:hover { transform: rotate(-12deg); }
 .theme-toggle .sun { display: none; }
 :root[data-theme="light"] .theme-toggle .sun { display: block; }
 :root[data-theme="light"] .theme-toggle .moon { display: none; }
+
+/* Phone/tablet menu — only shown below 960px */
+.menu-toggle { display: none; }
+.mobile-menu { display: none; }
+@keyframes menu-in {
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: none; }
+}
 
 /* ---------- Hero ---------- */
 .hero {
@@ -327,7 +338,8 @@ h1 {
 .viz-count { color: var(--term-dim); white-space: nowrap; }
 .viz-legend {
   display: flex;
-  gap: 18px;
+  flex-wrap: wrap;
+  gap: 8px 18px;
   margin-top: 12px;
   font-size: 0.76rem;
   color: var(--term-dim);
@@ -665,30 +677,101 @@ footer {
 .reveal.visible { opacity: 1; transform: none; }
 
 /* ---------- Responsive ---------- */
+
+/* Small laptops / landscape tablets */
 @media (max-width: 1024px) {
   .shorts { grid-template-columns: repeat(3, 1fr); }
+  .hero { gap: 40px; }
 }
+
+/* Portrait tablets */
 @media (max-width: 960px) {
-  .hero, .about, .featured { grid-template-columns: 1fr; }
-  .hero { padding-top: 56px; gap: 48px; }
+  .hero, .about { grid-template-columns: 1fr; }
+  .hero { padding: 56px 0 48px; gap: 48px; }
+  .viz { max-width: 640px; }
+  section { padding: 72px 0; }
   .grid { grid-template-columns: repeat(2, 1fr); }
-  .platforms { grid-template-columns: 1fr; }
+  .featured { gap: 24px; padding: 16px; }
+  .featured-body h3 { font-size: 1.2rem; }
+
+  .nav-links { gap: 10px; }
   .nav-links > a:not(.btn) { display: none; }
+  .menu-toggle { display: grid; }
+  .mobile-menu:not([hidden]) {
+    display: block;
+    border-top: 1px solid var(--border);
+    padding: 8px 0 20px;
+    animation: menu-in 0.2s ease;
+  }
+  .mobile-menu a:not(.btn) {
+    display: block;
+    padding: 14px 4px;
+    font-weight: 500;
+    border-bottom: 1px solid var(--border);
+  }
+  .mobile-menu a:not(.btn):hover { color: var(--accent); }
+  .mobile-menu .btn { display: none; }
+}
+
+@media (max-width: 720px) {
+  .featured { grid-template-columns: 1fr; }
   .featured-body { padding: 0 4px 4px; }
 }
+
+/* Phones */
 @media (max-width: 640px) {
-  section { padding: 64px 0; }
-  .grid { grid-template-columns: 1fr; }
-  .shorts { grid-template-columns: repeat(2, 1fr); gap: 14px; }
-  .section-head-row { flex-direction: column; align-items: flex-start; }
-  .viz { padding: 18px; }
-  .viz-bars { height: 160px; gap: 4px; }
-  .viz-value { font-size: 0.6rem; }
+  section { padding: 60px 0; }
+  .hero { padding-top: 40px; gap: 40px; }
+  .lead { font-size: 1.04rem; }
+  .cta-row .btn { flex: 1 1 100%; justify-content: center; }
+  .hero-meta { margin-top: 24px; }
+
+  .nav-subscribe { display: none; }
+  .mobile-menu .btn { display: flex; justify-content: center; margin-top: 18px; }
+  .brand { font-size: 0.98rem; gap: 10px; }
+  .brand-logo { width: 36px; height: 36px; }
+
+  .section-head { margin-bottom: 32px; }
+  .section-head-row { flex-direction: column; align-items: flex-start; margin-bottom: 32px; }
+  .grid { grid-template-columns: 1fr; gap: 14px; }
+  .card { padding: 22px; }
+
+  .viz { padding: 16px; border-radius: 16px; }
+  .viz-head { margin-bottom: 18px; }
+  .viz-bars { height: 150px; gap: 4px; }
+  .viz-value { font-size: 0.58rem; }
   .viz-foot { flex-direction: column; gap: 4px; }
-  .platform { grid-template-columns: 1fr; padding: 24px; }
-  .platform .btn { grid-column: 1; }
-  .brand { font-size: 0.98rem; }
+
+  .featured { padding: 10px; border-radius: 18px; gap: 16px; }
+  .featured-body { gap: 10px; padding: 0 8px 10px; }
+  .featured-body h3 { font-size: 1.1rem; }
+  .featured-body p { font-size: 0.92rem; }
+  .sub-head { margin-top: 40px; }
+  .shorts { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .short .play { width: 42px; height: 42px; margin: -21px 0 0 -21px; }
+  .short h4 { font-size: 0.85rem; }
+
+  .platforms { grid-template-columns: 1fr; gap: 14px; }
+  .platform { padding: 20px; gap: 6px 16px; }
+  .platform-icon { width: 48px; height: 48px; border-radius: 14px; }
+
+  .about { gap: 36px; }
   .footer-inner { flex-direction: column; align-items: flex-start; }
+}
+
+/* Very narrow phones */
+@media (max-width: 360px) {
+  .brand { font-size: 0.86rem; gap: 8px; }
+  .brand-logo { width: 32px; height: 32px; }
+  .nav-links { gap: 6px; }
+  .icon-btn { width: 36px; height: 36px; }
+  .viz-value { display: none; }
+}
+
+/* Touch screens have no hover — always show the play buttons and skip hover lifts */
+@media (hover: none) {
+  .play { opacity: 1; transform: scale(1); }
+  .card:hover, .platform:hover, .btn:hover { transform: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
